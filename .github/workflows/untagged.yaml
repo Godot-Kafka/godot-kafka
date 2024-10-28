@@ -22,6 +22,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: "[DEBUG] Show outputs"
+        run: |
+          echo version-changed = '${{ steps.release.outputs.version-changed }}'
+          echo new-version = '${{ steps.release.outputs.new-version }}'
+
       - name: Create a new tag
         if: steps.release.outputs.version-changed == 'true'
         run: |
