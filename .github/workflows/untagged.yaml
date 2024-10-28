@@ -2,6 +2,7 @@ name: Tag on Default Branch
 
 # Restrict the workflow to the main branch and ignore tags
 on:
+  workflow_dispatch:
   push:
     # branches:
       # - main  # Replace with your default branch name if different
