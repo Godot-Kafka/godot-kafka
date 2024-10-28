@@ -1,13 +1,13 @@
-name: Tag on Default Branch
+name: Automatic Semantic Versioning
 
 # Restrict the workflow to the main branch and ignore tags
 on:
   workflow_dispatch:
   push:
-    # branches:
-      # - main  # Replace with your default branch name if different
+    branches:
+      - main  # Replace with your default branch name if different
     tags-ignore:
-      - '*'   # Ignore tags to prevent infinite loop
+      - '*'
 
 jobs:
   tag_version:
@@ -41,7 +41,7 @@ jobs:
       - name: Create a new tag
         if: steps.release.outputs.version-changed == 'true'
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # git config --global user.name "github-actions[bot]"
+          # git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git tag -a v${{ steps.release.outputs.new-version }} -m "Release version ${{ steps.release.outputs.new-version }}"
           git push origin v${{ steps.release.outputs.new-version }}
