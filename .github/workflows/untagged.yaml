@@ -3,11 +3,9 @@ name: Automatic Semantic Versioning
 # Restrict the workflow to the main branch and ignore tags
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches:
-      - main  # Replace with your default branch name if different
-    tags-ignore:
-      - '*'
+      - main
 
 jobs:
   tag_version:
