@@ -3,7 +3,7 @@ name: Automatic Semantic Versioning
 # Restrict the workflow to the main branch and ignore tags
 on:
   workflow_dispatch:
-  pull_request:
+  push:
     branches:
       - main
 
