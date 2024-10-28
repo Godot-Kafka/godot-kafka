@@ -17,6 +17,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Initialize NPM
+        run: npm install
+
       - name: Create a release
         uses: gevorg-martir/version-me@v2.0.0
         env:
