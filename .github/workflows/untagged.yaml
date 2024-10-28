@@ -1,0 +1,30 @@
+name: Tag on Default Branch
+
+# Restrict the workflow to the main branch and ignore tags
+on:
+  push:
+    # branches:
+      # - main  # Replace with your default branch name if different
+    tags-ignore:
+      - '*'   # Ignore tags to prevent infinite loop
+
+jobs:
+  tag_version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create a release
+        uses: gevorg-martir/version-me@v2.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create a new tag
+        if: steps.release.outputs.version-changed == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a v${{ steps.release.outputs.new-version }} -m "Release version ${{ steps.release.outputs.new-version }}"
+          git push origin v${{ steps.release.outputs.new-version }}
