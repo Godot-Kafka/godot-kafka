@@ -1,0 +1,22 @@
+{
+    "name": "godot-kafka",
+    "version": "1.0.0",
+    "description": "A Godot plugin for Kafka integration",
+    "main": "index.js",
+    "scripts": {
+        "release": "semantic-release"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yourusername/godot-kafka.git"
+    },
+    "author": "Your Name",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/yourusername/godot-kafka/issues"
+    },
+    "homepage": "https://github.com/yourusername/godot-kafka#readme",
+    "devDependencies": {
+        "semantic-release": "^19.0.0"
+    }
+}
