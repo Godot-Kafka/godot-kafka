@@ -8,14 +8,20 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/yourusername/godot-kafka.git"
+        "url": "git+https://github.com/Godot-Kafka/godot-kafka.git"
     },
-    "author": "Your Name",
+    "author": "Godot Kafka",
+    "contributors": [
+        {
+            "name": "Brandon Smith",
+            "url": "https://github.com/bsmithcompsci"
+        }
+    ],
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/yourusername/godot-kafka/issues"
+        "url": "https://github.com/Godot-Kafka/godot-kafka/issues"
     },
-    "homepage": "https://github.com/yourusername/godot-kafka#readme",
+    "homepage": "https://github.com/Godot-Kafka/godot-kafka#readme",
     "devDependencies": {
         "semantic-release": "^19.0.0",
         "@semantic-release/changelog": "^6.0.3",
