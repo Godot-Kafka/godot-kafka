@@ -91,3 +91,21 @@ jobs:
           # Create a new tag for the release
           git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION" -m "$$CHANGELOG_NEWLINES"
           git push origin "v$NEW_VERSION"
+
+      - name: Create Release Draft
+        if: ${{ steps.get_version.outputs.nextRelease != '' }}
+        env:
+          NEXT_RELEASE: ${{ steps.get_version.outputs.nextRelease }}
+        run: |
+          # Extract the next version and changelog notes from the output
+          NEW_VERSION=$(echo $NEXT_RELEASE | jq -r '.version')
+          CHANGELOG=$(echo $NEXT_RELEASE | jq -r '.notes')
+          
+          # Update the Changelog to handle the new lines.
+          CHANGELOG_NEWLINES=$(echo -e "$CHANGELOG")
+
+          # Create the release draft
+          echo "Creating release draft for v$NEW_VERSION"
+          echo "Changelog: $CHANGELOG"
+          echo "Changelog with newlines: $CHANGELOG_NEWLINES"
+          gh release create "v$NEW_VERSION" --title "v$NEW_VERSION" --notes "$CHANGELOG_NEWLINES" --draft
