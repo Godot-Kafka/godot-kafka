@@ -3,10 +3,14 @@
     "plugins": [
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
-        "@semantic-release/changelog",
+        ["@semantic-release/changelog",
+            {
+                "changelogFile": "CHANGELOG.md"
+            }
+        ],
         "@semantic-release/github",
         ["@semantic-release/git", {
-            "assets": ["package.json", "src", "inc", "CMakeLists.txt", "README.md", "extern"],
+            "assets": ["package.json", "src", "inc", "CMakeLists.txt", "README.md", "CHANGELOG.md", "extern"],
             "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
         }]
     ]
