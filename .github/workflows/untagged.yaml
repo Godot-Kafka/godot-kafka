@@ -69,6 +69,7 @@ jobs:
         if: ${{ steps.get_version.outputs.nextRelease != '' }}
         env:
           NEXT_RELEASE: ${{ steps.get_version.outputs.nextRelease }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Extract the next version and changelog notes from the output
           NEW_VERSION=$(echo $NEXT_RELEASE | jq -r '.version')
@@ -96,7 +97,7 @@ jobs:
         if: ${{ steps.get_version.outputs.nextRelease != '' }}
         env:
           NEXT_RELEASE: ${{ steps.get_version.outputs.nextRelease }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT }}
         run: |
           # Extract the next version and changelog notes from the output
           NEW_VERSION=$(echo $NEXT_RELEASE | jq -r '.version')
