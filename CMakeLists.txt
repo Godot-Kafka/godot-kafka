@@ -5,6 +5,21 @@ project(
     LANGUAGES CXX
 )
 
+# Output System Information
+message(STATUS "CMake version: ${CMAKE_VERSION}")
+message(STATUS "CMake system name: ${CMAKE_SYSTEM_NAME}")
+message(STATUS "CMake system processor: ${CMAKE_SYSTEM_PROCESSOR}")
+
+# Output Compiler Information for both C++ and C
+message(STATUS "C++ Compiler: ${CMAKE_CXX_COMPILER}")
+message(STATUS "C++ Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "C++ Compiler Version: ${CMAKE_CXX_COMPILER_VERSION}")
+
+message(STATUS "C Compiler: ${CMAKE_C_COMPILER}")
+message(STATUS "C Compiler ID: ${CMAKE_C_COMPILER_ID}")
+message(STATUS "C Compiler Version: ${CMAKE_C_COMPILER_VERSION}")
+
+
 option(BUILD_TESTS "Build the tests" ON)
 
 # Set the C++ standard to C++17
