@@ -43,9 +43,10 @@ jobs:
               repositoryUrl: 'https://github.com/${{ github.repository }}',
               plugins: [
                 '@semantic-release/commit-analyzer',
-                '@semantic-release/release-notes-generator'
+                '@semantic-release/release-notes-generator',
               ],
             });
+            console.log('Result:', result);
             if (result && result.nextRelease) {
               console.log('Next version:', result.nextRelease.version);
               fs.appendFileSync(process.env.GITHUB_OUTPUT, 'new_version=' + result.nextRelease.version + '\n');
