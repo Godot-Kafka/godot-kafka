@@ -34,12 +34,12 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake clang-10
+        sudo apt-get install -y cmake clang
 
     - name: Build CMake project
       env:
-        CC:   clang-10
-        CXX:  clang++-10
+        CC:   clang
+        CXX:  clang++
         CONFIGURATION: ${{ matrix.configurations }}
       run: cmake -DCMAKE_BUILD_TYPE=${CONFIGURATION} -B build -S . && cmake --build build
     
