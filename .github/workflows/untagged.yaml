@@ -110,4 +110,4 @@ jobs:
           echo "Creating release draft for v$NEW_VERSION"
           echo "Changelog: $CHANGELOG"
           echo "Changelog with newlines: $CHANGELOG_NEWLINES"
-          gh release create "v$NEW_VERSION" --title "v$NEW_VERSION" --notes "$CHANGELOG_NEWLINES" --draft
+          gh release create "v$NEW_VERSION" --title "v$NEW_VERSION" --notes "$CHANGELOG_NEWLINES"
