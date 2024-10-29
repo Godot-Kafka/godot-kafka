@@ -74,19 +74,20 @@ jobs:
           NEW_VERSION=$(echo $NEXT_RELEASE | jq -r '.version')
           CHANGELOG=$(echo $NEXT_RELEASE | jq -r '.notes')
 
-          # Extract Changelog out of string quotes.
-          CHANGELOG=$(echo $CHANGELOG | sed 's/\"//g')
+          # Update the Changelog to handle the new lines.
+          CHANGELOG_NEWLINES=$(echo -e "$CHANGELOG")
 
           # Output everything.
           echo "New version: $NEW_VERSION"
           echo "Changelog: $CHANGELOG"
+          echo "Changelog with newlines: $CHANGELOG_NEWLINES"
 
           # Create the commit message
           COMMIT_MSG="chore(release): v$NEW_VERSION"
           # Create an empty commit with the changelog as the commit body
-          git commit --allow-empty -m "$COMMIT_MSG" -m "$(echo -e "$CHANGELOG")"
+          git commit --allow-empty -m "$COMMIT_MSG" -m "$CHANGELOG_NEWLINES"
           # Push the commit back to the branch
           git push origin HEAD:${{ github.ref }}
           # Create a new tag for the release
-          git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION" -m "$(echo -e "$CHANGELOG")"
+          git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION" -m "$$CHANGELOG_NEWLINES"
           git push origin "v$NEW_VERSION"
