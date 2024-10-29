@@ -1,3 +1,15 @@
+## [0.1.2](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.1...v0.1.2) (2024-10-29)
+
+
+### Bug Fixes
+
+* **ci:** deprecation warning. ([dcfc2c5](https://github.com/Godot-Kafka/godot-kafka/commit/dcfc2c596d8cb1d27f91d71ea21cd0d311640d6f))
+* **ci:** deprecation warnings. ([7bcf831](https://github.com/Godot-Kafka/godot-kafka/commit/7bcf831c45cdbdab32a6d402254922ccee2ac738))
+* **ci:** Don't release on a non-tagged build. ([a32b61f](https://github.com/Godot-Kafka/godot-kafka/commit/a32b61f8ff8501acb94dc8ac7265ba1fd6ec1a55))
+* **ci:** no assets available. ([c45220f](https://github.com/Godot-Kafka/godot-kafka/commit/c45220f06ea4b2eea36f7e654b0e8f55f346a8d9))
+* **ci:** retention-days ([4c6299f](https://github.com/Godot-Kafka/godot-kafka/commit/4c6299f7cdc597cf6ef457502a093dbd8142eabc))
+* run on tags ([0940d0c](https://github.com/Godot-Kafka/godot-kafka/commit/0940d0c2550040662a7c2c01dc66d752945ca624))
+
 ## [0.1.1](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.0...v0.1.1) (2024-10-28)
 
 
