@@ -7,12 +7,6 @@ project(
 
 option(BUILD_TESTS "Build the tests" ON)
 
-# Generate the project files
-# execute_process(
-# COMMAND scons
-# WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-# )
-
 # Set the C++ standard to C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -40,7 +34,7 @@ file(GLOB_RECURSE LIB_SOURCES "src/kafkalib/*.cpp")
 file(GLOB_RECURSE LIB_HEADERS "src/kafkalib/*.hpp" "src/kafkalib/*.h" "include/kafkalib/*.hpp" "include/kafkalib/*.h")
 
 # Include OpenSSL
-set(OPENSSL_USE_STATIC_LIBS TRUE)
+set(OPENSSL_USE_STATIC_LIBS TRUE CACHE BOOL "Use static OpenSSL libraries" FORCE)
 find_package(OpenSSL REQUIRED)
 set(system_library_extension "lib")
 
@@ -85,9 +79,9 @@ target_link_libraries(GodotKafka PRIVATE KafkaLib)
 set_target_properties(godot-cpp PROPERTIES FOLDER "External/Godot")
 
 # Include librdkafka
-set(RDKAFKA_BUILD_EXAMPLES OFF)
-set(RDKAFKA_BUILD_TESTS OFF)
-set(RDKAFKA_BUILD_STATIC ON)
+set(RDKAFKA_BUILD_EXAMPLES OFF CACHE BOOL "Disable building examples" FORCE)
+set(RDKAFKA_BUILD_TESTS OFF CACHE BOOL "Disable building examples" FORCE)
+set(RDKAFKA_BUILD_STATIC ON CACHE BOOL "Disable building examples" FORCE)
 add_subdirectory(extern/librdkafka)
 target_link_libraries(KafkaLib PUBLIC rdkafka) # rdkafka is the C library and the core.
 target_link_libraries(KafkaLib PUBLIC rdkafka++) # rdkafka++ is a C++ wrapper around librdkafka

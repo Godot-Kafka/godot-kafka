@@ -1,0 +1,24 @@
+[configuration]
+
+entry_symbol = "GDExtensionInit"
+compatibility_minimum = 4.1
+reloadable = false
+
+[libraries]
+
+// Exist only for Dedicated Servers.
+
+linux.debug.dedicated_server = "lib/Linux/libGodotKafka-d.so"
+linux.release.dedicated_server = "lib/Linux/libGodotKafka.so"
+
+windows.debug.dedicated_server = "lib/Windows/libGodotKafka-d.dll"
+windows.release.dedicated_server = "lib/Windows/libGodotKafka.dll"
+
+// Duplicate for Editor
+
+linux.debug.editor = "lib/Linux/libGodotKafka-d.so"
+linux.release.editor = "lib/Linux/libGodotKafka.so"
+
+windows.debug.editor = "lib/Windows/libGodotKafka-d.dll"
+windows.release.editor = "lib/Windows/libGodotKafka.dll"
+

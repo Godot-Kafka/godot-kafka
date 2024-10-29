@@ -9,29 +9,48 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        godot-version: 
+          - 4x
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Create example.txt
-      run: echo "This is an example file..." > example.txt
+    - name: Build CMake project
+      run: cmake -B build -S . && cmake --build build
+    
+    - name: Archive build artifacts
+      env:
+        GODOT_VERSION: ${{ matrix.godot-version }}
+        VERSION: ${{ github.ref }}
+      run: |
+        mkdir -p dist/bin
 
-    - name: Zip example.txt
-      run: zip example.zip example.txt
+        if [[ "$GODOT_VERSION" == "4x" ]]; then
+          # Write GDExtension config file
+          cp templates/godot-4x/ dist/
+        fi
+
+        # Copy the built binaries to the dist directory
+        cp build/bin/ dist/bin/
+        zip -r godot-${GODOT_VERSION}-kafka-${VERSION}.zip dist
 
     # Upload the asset to the releases page, if the tag is a version tag; otherwise, upload it as an artifact.
     - name: Upload Release Asset
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: example.zip
+        files: godot-${{ matrix.godot-version }}-kafka-${{ github.ref }}.zip
     - name: Upload Artifact Asset
       if: ${{ !startsWith(github.ref, 'refs/tags/') }}
       uses: actions/upload-artifact@v4
+      env:
+        GODOT_VERSION: ${{ matrix.godot-version }}
+        VERSION: ${{ github.ref }}
       with:
         name: build
-        path: example.zip
+        path: godot-${{ matrix.godot-version }}-kafka-${{ github.ref }}.zip
         if-no-files-found: error
         retention-days: 1
         overwrite: true
