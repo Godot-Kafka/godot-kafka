@@ -34,5 +34,5 @@ jobs:
         name: build
         path: example.zip
         if-no-files-found: error
-        rentention-days: 1
+        retention-days: 1
         overwrite: true
