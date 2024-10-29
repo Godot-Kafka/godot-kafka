@@ -75,15 +75,13 @@ jobs:
           # Output everything.
           echo "New version: $NEW_VERSION"
           echo "Changelog: $CHANGELOG"
-          
-          # # Decode the changelog from JSON format
-          # CHANGELOG_DECODED=$(echo "$CHANGELOG" | node -e "console.log(JSON.parse(process.stdin.read()))")
-          # # Create the commit message
-          # COMMIT_MSG="chore(release): v$NEW_VERSION"
-          # # Create an empty commit with the changelog as the commit body
-          # git commit --allow-empty -m "$COMMIT_MSG" -m "$CHANGELOG_DECODED"
-          # # Push the commit back to the branch
-          # git push origin HEAD:${{ github.ref }}
-          # # Create a new tag for the release
-          # git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION"
-          # git push origin "v$NEW_VERSION"
+
+          # Create the commit message
+          COMMIT_MSG="chore(release): v$NEW_VERSION"
+          # Create an empty commit with the changelog as the commit body
+          git commit --allow-empty -m "$COMMIT_MSG" -m "$CHANGELOG"
+          # Push the commit back to the branch
+          git push origin HEAD:${{ github.ref }}
+          # Create a new tag for the release
+          git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION" -m "$CHANGELOG"
+          git push origin "v$NEW_VERSION"
