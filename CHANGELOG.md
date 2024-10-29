@@ -1,3 +1,11 @@
+## [0.1.5](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.4...v0.1.5) (2024-10-29)
+
+
+### Bug Fixes
+
+* **ci:** deprecate version-me with manual npx command. ([9216d65](https://github.com/Godot-Kafka/godot-kafka/commit/9216d657b4c07646aa4a40e67342e95e64578881))
+* **ci:** tag envs ([84909c1](https://github.com/Godot-Kafka/godot-kafka/commit/84909c10fa28ca452d7f50d0eaa9a6c4a395e726))
+
 ## [0.1.4](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.3...v0.1.4) (2024-10-29)
 
 
