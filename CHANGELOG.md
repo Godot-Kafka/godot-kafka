@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.2...v0.1.3) (2024-10-29)
+
+
+### Bug Fixes
+
+* **ci:** tags. ([605e4f7](https://github.com/Godot-Kafka/godot-kafka/commit/605e4f71e610cdf3c2dc50a53f51fd87a766d434))
+
 ## [0.1.2](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.1...v0.1.2) (2024-10-29)
 
 
