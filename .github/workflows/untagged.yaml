@@ -96,11 +96,12 @@ jobs:
         if: ${{ steps.get_version.outputs.nextRelease != '' }}
         env:
           NEXT_RELEASE: ${{ steps.get_version.outputs.nextRelease }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Extract the next version and changelog notes from the output
           NEW_VERSION=$(echo $NEXT_RELEASE | jq -r '.version')
           CHANGELOG=$(echo $NEXT_RELEASE | jq -r '.notes')
-          
+
           # Update the Changelog to handle the new lines.
           CHANGELOG_NEWLINES=$(echo -e "$CHANGELOG")
 
