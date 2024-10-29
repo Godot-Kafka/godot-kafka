@@ -1,6 +1,6 @@
 {
     "name": "godot-kafka",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A Godot plugin for Kafka integration",
     "main": "index.js",
     "scripts": {
@@ -23,8 +23,9 @@
     },
     "homepage": "https://github.com/Godot-Kafka/godot-kafka#readme",
     "devDependencies": {
-        "semantic-release": "^19.0.0",
         "@semantic-release/changelog": "^6.0.3",
-        "@semantic-release/git": "^10.0.1"
+        "@semantic-release/git": "^10.0.1",
+        "semantic-release": "^19.0.0",
+        "standard-version": "^9.5.0"
     }
 }
