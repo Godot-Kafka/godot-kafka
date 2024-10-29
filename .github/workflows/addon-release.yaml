@@ -21,8 +21,18 @@ jobs:
     - name: Zip example.txt
       run: zip example.zip example.txt
 
+    # Upload the asset to the releases page, if the tag is a version tag; otherwise, upload it as an artifact.
     - name: Upload Release Asset
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
         files: example.zip
+    - name: Upload Artifact Asset
+      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: build
+        path: example.zip
+        if-no-files-found: error
+        rentention-days: 1
+        overwrite: true
