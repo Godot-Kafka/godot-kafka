@@ -27,9 +27,8 @@ jobs:
         run: npm install
 
       - name: Create a release
-        uses: gevorg-martir/version-me@v2.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx semantic-release
 
       - name: "[DEBUG] Show outputs"
         run: |
