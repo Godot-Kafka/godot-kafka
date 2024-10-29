@@ -3,8 +3,7 @@ name: Build and Release Addon
 on:
   workflow_dispatch:
   pull_request:
-  release:
-    types: [created, prereleased, released, published]
+  create:
 
 jobs:
   build:
