@@ -13,15 +13,35 @@ jobs:
       matrix:
         godot-version: 
           - 4x
+        configurations:
+          # - Debug
+          - Release
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         # Fetch all submodules.
         submodules: recursive
+    
+    - name: Cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          build/
+          !build/bin
+        key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake clang-10
 
     - name: Build CMake project
-      run: cmake -B build -S . && cmake --build build
+      env:
+        CC:   clang-10
+        CXX:  clang++-10
+        CONFIGURATION: ${{ matrix.configurations }}
+      run: cmake -DCMAKE_BUILD_TYPE=${CONFIGURATION} -B build -S . && cmake --build build
     
     - name: Archive build artifacts
       env:
