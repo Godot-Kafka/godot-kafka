@@ -18,12 +18,13 @@ const result = await semanticRelease({
 console.log('Result:', result);
 if (result && result.nextRelease) {
     console.log('Next version:', result.nextRelease.version);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, 'new_version=' + result.nextRelease.version + '\n');
     const changelogNotes = JSON.stringify(result.nextRelease.notes);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, 'changelog=' + changelogNotes + '\n');
+    console.log('Changelog notes:', changelogNotes);
+    // fs.appendFileSync(process.env.GITHUB_OUTPUT, 'new_version=' + result.nextRelease.version + '\n');
+    // fs.appendFileSync(process.env.GITHUB_OUTPUT, 'changelog=' + changelogNotes + '\n');
 } else {
     console.log('No release necessary.');
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, 'new_version=\n');
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, 'changelog=\n');
+    // fs.appendFileSync(process.env.GITHUB_OUTPUT, 'new_version=\n');
+    // fs.appendFileSync(process.env.GITHUB_OUTPUT, 'changelog=\n');
 }
 })();
