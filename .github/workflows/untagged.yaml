@@ -48,9 +48,10 @@ jobs:
             });
             console.log('Result:', result);
             if (result && result.nextRelease) {
-              console.log('Next version:', result.nextRelease.version);
-              fs.appendFileSync(process.env.GITHUB_OUTPUT, 'new_version=' + result.nextRelease.version + '\n');
               const changelogNotes = JSON.stringify(result.nextRelease.notes);
+              console.log('Next version:', result.nextRelease.version);
+              console.log('Changelog:', changelogNotes);
+              fs.appendFileSync(process.env.GITHUB_OUTPUT, 'new_version=' + result.nextRelease.version + '\n');
               fs.appendFileSync(process.env.GITHUB_OUTPUT, 'changelog=' + changelogNotes + '\n');
             } else {
               console.log('No release necessary.');
@@ -71,14 +72,18 @@ jobs:
           NEW_VERSION: ${{ steps.get_version.outputs.new_version }}
           CHANGELOG: ${{ steps.get_version.outputs.changelog }}
         run: |
-          # Decode the changelog from JSON format
-          CHANGELOG_DECODED=$(echo "$CHANGELOG" | node -e "console.log(JSON.parse(process.stdin.read()))")
-          # Create the commit message
-          COMMIT_MSG="chore(release): v$NEW_VERSION"
-          # Create an empty commit with the changelog as the commit body
-          git commit --allow-empty -m "$COMMIT_MSG" -m "$CHANGELOG_DECODED"
-          # Push the commit back to the branch
-          git push origin HEAD:${{ github.ref }}
-          # Create a new tag for the release
-          git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION"
-          git push origin "v$NEW_VERSION"
+          # Output everything.
+          echo "New version: $NEW_VERSION"
+          echo "Changelog: $CHANGELOG"
+          
+          # # Decode the changelog from JSON format
+          # CHANGELOG_DECODED=$(echo "$CHANGELOG" | node -e "console.log(JSON.parse(process.stdin.read()))")
+          # # Create the commit message
+          # COMMIT_MSG="chore(release): v$NEW_VERSION"
+          # # Create an empty commit with the changelog as the commit body
+          # git commit --allow-empty -m "$COMMIT_MSG" -m "$CHANGELOG_DECODED"
+          # # Push the commit back to the branch
+          # git push origin HEAD:${{ github.ref }}
+          # # Create a new tag for the release
+          # git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION"
+          # git push origin "v$NEW_VERSION"
