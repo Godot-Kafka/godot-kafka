@@ -30,5 +30,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git commit -am "chore(release): ${nextRelease.version}"
           npx semantic-release
