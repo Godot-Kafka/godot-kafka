@@ -16,6 +16,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        # Fetch all submodules.
+        submodules: recursive
 
     - name: Build CMake project
       run: cmake -B build -S . && cmake --build build
