@@ -8,14 +8,21 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        godot-version: 
+        runs-on:
+          - ubuntu-latest
+          - windows-latest
+        compiler:
+          - { name: "gnu", cpp: 'g++', c: 'gcc' }
+        godot-version:
           - 4x
         configurations:
           # - Debug
           - Release
+        architecture:
+          - x86_x64
+    runs-on: ${{ matrix.runs-on }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -29,51 +36,49 @@ jobs:
         path: |
           build/
           !build/bin
-        key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
+        key: ${{ runner.os }}-${{ matrix.godot-version }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}-${{ matrix.configurations }}-${{ matrix.compiler.name }}-${{ matrix.architecture }}
 
     - name: Install dependencies
+      env:
+        CC:   ${{ matrix.compiler.c }}
+        CXX:  ${{ matrix.compiler.cpp }}
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++ gcc
+        sudo apt-get install -y cmake ${CC} ${CXX}
 
     - name: Build CMake project
       env:
-        CC:   gcc
-        CXX:  g++
-        CONFIGURATION: ${{ matrix.configurations }}
-      run: cmake -DCMAKE_BUILD_TYPE=${CONFIGURATION} -B build -S . && cmake --build build
+        CC:   ${{ matrix.compiler.c }}
+        CXX:  ${{ matrix.compiler.cpp }}
+      run: cmake -DCMAKE_BUILD_TYPE=${{ matrix.configurations }} -B build -S . && cmake --build build
     
     - name: Archive build artifacts
-      env:
-        GODOT_VERSION: ${{ matrix.godot-version }}
-        VERSION: ${{ github.ref }}
       run: |
         mkdir -p dist/bin
 
-        if [[ "$GODOT_VERSION" == "4x" ]]; then
+        if [[ "${{ matrix.godot-version }}" == "4x" ]]; then
           # Write GDExtension config file
           cp templates/godot-4x/ dist/
         fi
 
         # Copy the built binaries to the dist directory
         cp build/bin/ dist/bin/
-        zip -r godot-${GODOT_VERSION}-kafka-${VERSION}.zip dist
+        # Zip file name should be example: 
+        #   ubuntu-godot-4x-kafka-v1.0.0-Release-gnu-x86_x64.zip
+        zip -r ${{ runner.os }}-godot-${{ matrix.godot-version }}-kafka-${{ github.ref }}-${{ matrix.configurations }}-${{ matrix.compiler.name }}-${{ matrix.architecture }}.zip dist
 
     # Upload the asset to the releases page, if the tag is a version tag; otherwise, upload it as an artifact.
     - name: Upload Release Asset
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: godot-${{ matrix.godot-version }}-kafka-${{ github.ref }}.zip
+        files: ${{ runner.os }}-godot-${{ matrix.godot-version }}-kafka-${{ github.ref }}-${{ matrix.configurations }}-${{ matrix.compiler.name }}-${{ matrix.architecture }}.zip
     - name: Upload Artifact Asset
       if: ${{ !startsWith(github.ref, 'refs/tags/') }}
       uses: actions/upload-artifact@v4
-      env:
-        GODOT_VERSION: ${{ matrix.godot-version }}
-        VERSION: ${{ github.ref }}
       with:
         name: build
-        path: godot-${{ matrix.godot-version }}-kafka-${{ github.ref }}.zip
+        path: ${{ runner.os }}-godot-${{ matrix.godot-version }}-kafka-${{ github.ref }}-${{ matrix.configurations }}-${{ matrix.compiler.name }}-${{ matrix.architecture }}.zip
         if-no-files-found: error
         retention-days: 1
         overwrite: true
