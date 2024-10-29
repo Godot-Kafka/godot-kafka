@@ -143,7 +143,8 @@ static RdKafka::KafkaConsumer *create_consumer(const KafkaConsumerMetadata &meta
 	}
 
 	// Set the auto offset reset to earliest.
-	if (conf->set("auto.offset.reset", ConsumerOffsetResetToString(metadata.offset_reset), errstr) != RdKafka::Conf::CONF_OK) {
+	std::string auto_offset_reset = ConsumerOffsetResetToString(metadata.offset_reset);
+	if (conf->set("auto.offset.reset", auto_offset_reset, errstr) != RdKafka::Conf::CONF_OK) {
 		return nullptr;
 	}
 
