@@ -1,3 +1,11 @@
+## [0.1.4](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.3...v0.1.4) (2024-10-29)
+
+
+### Bug Fixes
+
+* **ci:** minimize the amount of builds being done. ([c634a41](https://github.com/Godot-Kafka/godot-kafka/commit/c634a41f818c1b7c7ac2a5116faf97afef3d9b14))
+* **ci:** on push always. ([bbc5f09](https://github.com/Godot-Kafka/godot-kafka/commit/bbc5f097506bb6ee7cc484031ff33aa3b9998433))
+
 ## [0.1.3](https://github.com/Godot-Kafka/godot-kafka/compare/v0.1.2...v0.1.3) (2024-10-29)
 
 
