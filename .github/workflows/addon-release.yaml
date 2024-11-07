@@ -11,8 +11,8 @@ jobs:
     strategy:
       matrix:
         runs-on:
-          - ubuntu-latest
-          - windows-latest
+          - Linux
+          # - windows-latest
         compiler:
           - { name: "gnu", cpp: 'g++', c: 'gcc' }
           # - { name: "clang", cpp: 'clang++', c: 'clang' }
