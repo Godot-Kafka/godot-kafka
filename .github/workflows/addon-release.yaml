@@ -26,6 +26,8 @@ jobs:
           # - arm64
 
     runs-on: ${{ matrix.runs-on }}
+    container:
+      image: ubuntu:latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
