@@ -29,6 +29,14 @@ jobs:
     container:
       image: ubuntu:latest
     steps:
+    - name: Install dependencies
+      env:
+        CC:   ${{ matrix.compiler.c }}
+        CXX:  ${{ matrix.compiler.cpp }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake git git-lfs $CC $CXX
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
@@ -42,14 +50,6 @@ jobs:
           build/
           !build/bin
         key: ${{ runner.os }}-${{ matrix.godot-version }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}-${{ matrix.configurations }}-${{ matrix.compiler.name }}-${{ matrix.architecture }}
-
-    - name: Install dependencies
-      env:
-        CC:   ${{ matrix.compiler.c }}
-        CXX:  ${{ matrix.compiler.cpp }}
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y cmake ${CC} ${CXX}
 
     - name: Build CMake project
       env:
