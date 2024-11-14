@@ -48,6 +48,9 @@ file(GLOB_RECURSE TEST_HEADERS "src/test/*.hpp" "src/test/*.h")
 file(GLOB_RECURSE LIB_SOURCES "src/kafkalib/*.cpp")
 file(GLOB_RECURSE LIB_HEADERS "src/kafkalib/*.hpp" "src/kafkalib/*.h" "include/kafkalib/*.hpp" "include/kafkalib/*.h")
 
+# Compiler -fPIC
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 # Include OpenSSL
 set(OPENSSL_USE_STATIC_LIBS TRUE CACHE BOOL "Use static OpenSSL libraries" FORCE)
 find_package(OpenSSL REQUIRED)

@@ -11,8 +11,8 @@ jobs:
     strategy:
       matrix:
         runs-on:
-          - ubuntu-latest
-          - windows-latest
+          - Linux
+          # - windows-latest
         compiler:
           - { name: "gnu", cpp: 'g++', c: 'gcc' }
           # - { name: "clang", cpp: 'clang++', c: 'clang' }
@@ -26,28 +26,30 @@ jobs:
           # - arm64
 
     runs-on: ${{ matrix.runs-on }}
+    container:
+      image: ubuntu:latest
     steps:
+    - name: Install dependencies
+      env:
+        CC:   ${{ matrix.compiler.c }}
+        CXX:  ${{ matrix.compiler.cpp }}
+      run: |
+        apt-get update
+        apt-get install -y build-essential libssl-dev python3 cmake git git-lfs $CC $CXX
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         # Fetch all submodules.
         submodules: recursive
     
-    - name: Cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          build/
-          !build/bin
-        key: ${{ runner.os }}-${{ matrix.godot-version }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}-${{ matrix.configurations }}-${{ matrix.compiler.name }}-${{ matrix.architecture }}
-
-    - name: Install dependencies
-      env:
-        CC:   ${{ matrix.compiler.c }}
-        CXX:  ${{ matrix.compiler.cpp }}
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y cmake ${CC} ${CXX}
+    # - name: Cache
+    #   uses: actions/cache@v4
+    #   with:
+    #     path: |
+    #       build/
+    #       !build/bin
+    #     key: ${{ runner.os }}-${{ matrix.godot-version }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}-${{ matrix.configurations }}-${{ matrix.compiler.name }}-${{ matrix.architecture }}
 
     - name: Build CMake project
       env:
